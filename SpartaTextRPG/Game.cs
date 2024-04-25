@@ -21,6 +21,7 @@ namespace SpartaTextRPG
             Console.WriteLine("2.인벤토리");
             Console.WriteLine("3.상점");
             Console.WriteLine("4.던전입장");
+            Console.WriteLine("5.휴식하기");
             Console.WriteLine("0.게임종료\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
@@ -94,6 +95,12 @@ namespace SpartaTextRPG
                         case ConsoleKey.NumPad4:
                             Console.Clear();
                             dungeon.DisplayDungeonEntrance();
+                            break;
+                        // 휴식하기
+                        case ConsoleKey.D5:
+                        case ConsoleKey.NumPad5:
+                            Console.Clear();
+                            character.Rest();
                             break;
                         default:
                             Console.WriteLine("잘못된 입력입니다.");
