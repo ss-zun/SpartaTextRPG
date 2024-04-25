@@ -6,12 +6,12 @@ namespace SpartaTextRPG
     // internal : 같은 프로젝트 내 클래스끼리 접근허용
     internal class Game
     {
-        private static int gameSpeed;
         private static string characterName;
         public static List<Item> items;
         public static Character character;
         public static Shop shop;
         public static Dungeon dungeon;
+
         // 게임 시작 화면
         public static void StartScreen()
         {
@@ -45,7 +45,6 @@ namespace SpartaTextRPG
         // 초기화 모음
         private static void InitGame()
         {
-            gameSpeed = 100;
             characterName = "삐약";
             items = new List<Item>(); // 아이템 목록
             character = new Character(new Inventory(), 1, characterName, CHAD.Warrior, 10.0, 5.0, 100.0, 1500, 0);
@@ -56,7 +55,7 @@ namespace SpartaTextRPG
             StartScreen();
         }
 
-        // 업데이트
+        // 게임 실행중
         private static void UpdateGame()
         {
             while (true)
@@ -107,7 +106,6 @@ namespace SpartaTextRPG
                             break;
                     }
                 }
-                Thread.Sleep(gameSpeed);
             }
         }
 
@@ -117,6 +115,8 @@ namespace SpartaTextRPG
             InitGame();
             // Update
             UpdateGame();
+            // close
+            Environment.Exit(-1); // 비정상 종료
         }
     }
 }

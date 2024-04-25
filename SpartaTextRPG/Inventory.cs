@@ -31,27 +31,27 @@ namespace SpartaTextRPG
         }
 
         // 장착중인 공격력 아이템 능력치를 모두 더하여 반환
-        public int TotalAttackItemStatus()
+        public double TotalAttackItemStatus()
         {
-            int totalStats = 0;
+            double totalItemValue = 0;
             foreach (Item item in items)
             {
                 if (item.isEquipped == true && item is Weapon)
-                    totalStats += item.GetStatus();
+                    totalItemValue += item.GetItemValue();
             }
-            return totalStats;
+            return totalItemValue;
         }
 
         // 장착중인 방어력 아이템 능력치를 모두 더하여 반환
-        public int TotalDefenseItemStatus()
+        public double TotalDefenseItemStatus()
         {
-            int totalStats = 0;
+            double totalItemValue = 0;
             foreach (Item item in items)
             {
                 if (item.isEquipped == true && item is Armor)
-                    totalStats += item.GetStatus();
+                    totalItemValue += item.GetItemValue();
             }
-            return totalStats;
+            return totalItemValue;
         }
 
         // 인벤토리 아이템 목록 화면
@@ -67,7 +67,7 @@ namespace SpartaTextRPG
                 {
                     Console.WriteLine($"[E]{items[i].DisplayItem()}");
                 }
-                else
+                else // 미장착
                 {
                     Console.WriteLine($"{items[i].DisplayItem()}");
                 }           
@@ -118,7 +118,7 @@ namespace SpartaTextRPG
                 {
                     Console.WriteLine($"{i + 1} [E]{items[i].DisplayItem()}");
                 }
-                else
+                else // 미장착
                 {
                     Console.WriteLine($"{i + 1} {items[i].DisplayItem()}");
                 }
@@ -136,7 +136,7 @@ namespace SpartaTextRPG
 
                     if (int.TryParse(keyChar.ToString(), out int key))
                     {
-                        if (key == 0)
+                        if (key == 0) // 나가기
                         {
                             Console.Clear();
                             Game.StartScreen();

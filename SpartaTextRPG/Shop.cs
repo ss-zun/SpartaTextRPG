@@ -108,12 +108,10 @@ namespace SpartaTextRPG
                 if (Console.KeyAvailable)
                 {
                     char keyChar = Console.ReadKey(true).KeyChar; // true 하면 버퍼 비워줌
-
-                    // 숫자를 입력했다면
-                    if (int.TryParse(keyChar.ToString(), out int key))
+                    
+                    if (int.TryParse(keyChar.ToString(), out int key)) // 숫자를 입력했다면
                     {
-                        // 나가기
-                        if (key == 0)
+                        if (key == 0) // 나가기
                         {
                             Console.Clear();
                             Game.StartScreen();
@@ -179,16 +177,18 @@ namespace SpartaTextRPG
             }
             Console.WriteLine("\n0. 나가기\n");
 
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+
             while (true)
             {
                 if (Console.KeyAvailable)
                 {
                     char keyChar = Console.ReadKey(true).KeyChar; // true 하면 버퍼 비워줌
 
-                    // 숫자를 입력했다면
-                    if (int.TryParse(keyChar.ToString(), out int key))
+                    if (int.TryParse(keyChar.ToString(), out int key)) // 숫자를 입력했다면
                     {
-                        if (key == 0)
+                        if (key == 0) // 나가기
                         {
                             Console.Clear();
                             Game.StartScreen();
@@ -219,9 +219,6 @@ namespace SpartaTextRPG
                     }
                 }
             }
-
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
         }
     }
 }

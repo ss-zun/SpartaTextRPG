@@ -94,12 +94,13 @@ namespace SpartaTextRPG
 
         // 던전 실패
         public void FailedDungeon()
-        {
-            // 보상 없고 체력 감소 절반
+        {        
             Console.WriteLine("< 던전 클리어 실패 >");
+            // 보상 없고 체력 감소 절반
             double oldHealth = Character.instance.health;
             Character.instance.DecreaseHealth(Character.instance.health / 2);
             Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}\n");
+
             Console.WriteLine("Press Enter...");
             Console.ReadLine(); // 아무키 입력 후 화면 전환
             Console.Clear();
