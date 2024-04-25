@@ -11,6 +11,7 @@ namespace SpartaTextRPG
         public static List<Item> items;
         public static Character character;
         public static Shop shop;
+        public static Dungeon dungeon;
         // 게임 시작 화면
         public static void StartScreen()
         {
@@ -19,6 +20,7 @@ namespace SpartaTextRPG
             Console.WriteLine("1.상태 보기");
             Console.WriteLine("2.인벤토리");
             Console.WriteLine("3.상점");
+            Console.WriteLine("4.던전입장");
             Console.WriteLine("0.게임종료\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
@@ -46,7 +48,8 @@ namespace SpartaTextRPG
             characterName = "삐약";
             items = new List<Item>(); // 아이템 목록
             character = new Character(new Inventory(), 1, characterName, CHAD.Warrior, 10, 5, 100, 1500);
-            shop = new Shop(character, items);
+            shop = new Shop(items);
+            dungeon = new Dungeon();
 
             InitializeItems(items);
             StartScreen();
@@ -63,24 +66,34 @@ namespace SpartaTextRPG
 
                     switch (key)
                     {
+                        // 게임종료
                         case ConsoleKey.D0:
                         case ConsoleKey.NumPad0:
                             Environment.Exit(0); // 0 : 정상종료
                             break;
+                        // 상태보기
                         case ConsoleKey.D1:
                         case ConsoleKey.NumPad1:
                             Console.Clear();
                             character.PrintCharacterInfo();
                             break;
+                        // 인벤토리
                         case ConsoleKey.D2:
                         case ConsoleKey.NumPad2:
                             Console.Clear();
                             character.inventory.DisplayInventory();
                             break;
+                        // 상점
                         case ConsoleKey.D3:
                         case ConsoleKey.NumPad3:
                             Console.Clear();
                             shop.DisplayShopItem();
+                            break;
+                        // 던전입장
+                        case ConsoleKey.D4:
+                        case ConsoleKey.NumPad4:
+                            Console.Clear();
+                            dungeon.DisplayDungeonEntrance();
                             break;
                         default:
                             Console.WriteLine("잘못된 입력입니다.");

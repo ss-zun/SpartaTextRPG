@@ -8,11 +8,9 @@ namespace SpartaTextRPG
 {
     public class Shop
     {
-        private Character character;
         private List<Item> items;
-        public Shop(Character _character, List<Item> _items)
+        public Shop(List<Item> _items)
         {
-            character = _character;
             items = _items;
         }
 
@@ -23,7 +21,7 @@ namespace SpartaTextRPG
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.\n");
 
             Console.WriteLine("[보유 골드]\n");
-            Console.WriteLine($"{character.gold} G\n");
+            Console.WriteLine($"{Character.instance.gold} G\n");
 
             Console.WriteLine("[아이템 목록]");
             for (int i = 0; i < items.Count; i++)
@@ -86,7 +84,7 @@ namespace SpartaTextRPG
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.\n");
 
             Console.WriteLine("[보유 골드]\n");
-            Console.WriteLine($"{character.gold} G\n");
+            Console.WriteLine($"{Character.instance.gold} G\n");
 
             Console.WriteLine("[아이템 목록]");
             for (int i = 0; i < items.Count; i++)
@@ -132,11 +130,11 @@ namespace SpartaTextRPG
                                 }
                                 else // 구매가 가능 하다면
                                 {
-                                    if (character.gold >= items[key - 1].price)
+                                    if (Character.instance.gold >= items[key - 1].price)
                                     {
                                         Console.WriteLine("구매를 완료했습니다.");
-                                        character.DecreaseGold(items[key - 1].price); // 골드 감소
-                                        character.inventory.AddItem(items[key - 1]); // 인벤토리에 아이템 추가
+                                        Character.instance.DecreaseGold(items[key - 1].price); // 골드 감소
+                                        Character.instance.inventory.AddItem(items[key - 1]); // 인벤토리에 아이템 추가
                                         items[key - 1].completeSale(); // 판매완료 상태 전환
                                         Console.WriteLine("Press Enter...");
                                         Console.ReadLine(); // 아무키 입력 후 화면 전환
@@ -171,10 +169,10 @@ namespace SpartaTextRPG
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.\n");
 
             Console.WriteLine("[보유 골드]\n");
-            Console.WriteLine($"{character.gold} G\n");
+            Console.WriteLine($"{Character.instance.gold} G\n");
 
             Console.WriteLine("[아이템 목록]");
-            List<Item> characterItems = character.inventory.items; // 캐릭터 인벤토리 내 아이템
+            List<Item> characterItems = Character.instance.inventory.items; // 캐릭터 인벤토리 내 아이템
             for (int i = 0; i < characterItems.Count; i++)
             {
                 Console.WriteLine($"{i + 1} {characterItems[i].DisplayItem()} | {characterItems[i].price} G");
@@ -203,8 +201,8 @@ namespace SpartaTextRPG
                                 characterItems[key - 1].ChangeEquipped();
                             }
                             characterItems[key - 1].availableSale(); // 판매가능 상태로 전환
-                            character.IncreaseGold((int)(characterItems[key - 1].price * 0.85)); // 골드 증가
-                            character.inventory.DropItem(characterItems[key - 1]); // 판매된 아이템 인벤토리에서 제거
+                            Character.instance.IncreaseGold((int)(characterItems[key - 1].price * 0.85)); // 골드 증가
+                            Character.instance.inventory.DropItem(characterItems[key - 1]); // 판매된 아이템 인벤토리에서 제거
 
                             Console.Clear();
                             DisplayShopItem();

@@ -21,6 +21,7 @@ namespace SpartaTextRPG
 
     public class Character
     {
+        public static Character instance; // 싱글톤
         public Inventory inventory { get; } // 캐릭터의 인벤토리
 
         // 캐릭터 속성
@@ -35,6 +36,8 @@ namespace SpartaTextRPG
             int _attackPower, int _defensePower,
             int _health, int _gold)
         {
+            if (instance == null)
+                instance = this;
             inventory = _inventory; // 인벤토리
             level = _level;
             name = _name;
@@ -69,16 +72,22 @@ namespace SpartaTextRPG
             attackPower -= itemStat;
         }
 
-        // 골드 증가
-        public void IncreaseGold(int itemPrice)
+        // 체력 스탯 감소
+        public void DecreaseHealth(int decreasedHealth)
         {
-            gold += itemPrice;
+            health -= decreasedHealth;
+        }
+
+        // 골드 증가
+        public void IncreaseGold(int increaseGold)
+        {
+            gold += increaseGold;
         }
 
         // 골드 감소
-        public void DecreaseGold(int itemPrice)
+        public void DecreaseGold(int decreaseGold)
         {
-            gold -= itemPrice;
+            gold -= decreaseGold;
         }
 
         // 캐릭터 정보 출력
@@ -88,7 +97,7 @@ namespace SpartaTextRPG
             Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
             Console.WriteLine($"레벨: {level.ToString("00")}");
             Console.WriteLine($"이름: {name}");
-            Console.WriteLine($"직업: {GetClassName()}");
+            Console.WriteLine($"직업: {GetChadName()}");
             Console.WriteLine($"공격력: {attackPower} (+{inventory.TotalAttackItemStatus()})");
             Console.WriteLine($"방어력: {defensePower} (+{inventory.TotalDefenseItemStatus()})");
             Console.WriteLine($"체력: {health}");
@@ -120,8 +129,9 @@ namespace SpartaTextRPG
                 }
             }
         }
-        // 클래스 이름 변환
-        private string GetClassName()
+
+        // 직업 이름 변환
+        private string GetChadName()
         {
             switch (chad)
             {
