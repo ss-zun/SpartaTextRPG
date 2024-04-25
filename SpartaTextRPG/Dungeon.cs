@@ -12,6 +12,7 @@ namespace SpartaTextRPG
     {
         protected double recommendedDefense; // 권장 방어력
         protected int goldReward; // 기본 골드 보상
+        protected string dungeonLevel; // 던전 난이도
 
         // 던전 입구
         public void DisplayDungeonEntrance()
@@ -73,18 +74,11 @@ namespace SpartaTextRPG
         // 방어력으로 던전을 수행할 수 있을지 판단
         public void CheckDefense()
         {
-            // 권장 방어력보다 낮다면
-            if(Character.instance.defensePower < recommendedDefense)
+            int p = new Random().Next(0, 10);
+            // 권장 방어력보다 낮고, 40% 확률로 던전 실패
+            if ((Character.instance.defensePower < recommendedDefense) && (p < 4))
             {
-                int p = new Random().Next(0, 10);
-                if (p < 4) // 40% 확률로 던전 실패
-                {
-                    FailedDungeon();
-                }
-                else
-                {
-                    ClearDungeon();
-                }
+                FailedDungeon();
             }
             else
             {
@@ -96,9 +90,10 @@ namespace SpartaTextRPG
         public void FailedDungeon()
         {        
             Console.WriteLine("< 던전 클리어 실패 >");
-            // 보상 없고 체력 감소 절반
+            // 보상 없고, 체력 절반 감소
             double oldHealth = Character.instance.health;
-            Character.instance.DecreaseHealth(Character.instance.health / 2);
+            int decreaseHealth = (int)(Character.instance.health / 2);
+            Character.instance.DecreaseHealth(decreaseHealth); // 캐릭터 체력 감소
             Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}\n");
 
             Console.WriteLine("Press Enter...");
@@ -112,17 +107,15 @@ namespace SpartaTextRPG
         {
             Console.WriteLine("< 던전 클리어 >");
             Console.WriteLine("축하합니다!!");
-            Console.WriteLine($"{"쉬운 던전"}을 클리어 하였습니다.\n");
+            Console.WriteLine($"{dungeonLevel}을 클리어 하였습니다.\n");
 
             Console.WriteLine("[탐험 결과]");
             // 체력 감소
             double oldHealth = Character.instance.health; // 기존의 내 방어력
-            double defenseDifference = Character.instance.defensePower - recommendedDefense; // 내 방어력 - 권장 방어력
-            double min = 20.0 + defenseDifference;
-            double max = 36.0 + defenseDifference;
-            double decreasedHealth = min + (max - min) * new Random().NextDouble(); // 20(-+@)~35(-+@)
-            Character.instance.DecreaseHealth(decreasedHealth); // 캐릭터 체력 감소
-            Console.WriteLine($"체력 {oldHealth.ToString("N1")} -> {Character.instance.health.ToString("N1")}");
+            int defenseDifference = (int)(Character.instance.defensePower - recommendedDefense); // 내 방어력 - 권장 방어력
+            int decreaseHealth = new Random().Next(20 + defenseDifference, 35 + 1 + defenseDifference); // 20(-+@)~35(-+@)
+            Character.instance.DecreaseHealth(decreaseHealth); // 캐릭터 체력 감소
+            Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}");
 
             // 골드 보상
             int oldGold = Character.instance.gold; // 기존의 내 골드
@@ -175,6 +168,7 @@ namespace SpartaTextRPG
         {
             recommendedDefense = 5.0;
             goldReward = 1000;
+            dungeonLevel = "쉬운 던전";
         }
     }
 
@@ -185,6 +179,7 @@ namespace SpartaTextRPG
         {
             recommendedDefense = 11.0;
             goldReward = 1700;
+            dungeonLevel = "일반 던전";
         }
     }
 
@@ -195,6 +190,7 @@ namespace SpartaTextRPG
         {
             recommendedDefense = 17.0;
             goldReward = 2500;
+            dungeonLevel = "어려운 던전";
         }
     }
 }

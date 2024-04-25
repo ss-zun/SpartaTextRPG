@@ -27,12 +27,13 @@ namespace SpartaTextRPG
         // 캐릭터 속성
         public int level { get; private set; }
         public string name { get; private set; }
-        public CHAD chad { get; private set; }
+        public CHAD chad { get; private set; } // 직업
         public double attackPower { get; private set; }
         public double defensePower { get; private set; }
         public double health { get; private set; }
         public int gold { get; private set; }
-        public int clearCount { get; private set; }
+        public int clearCount { get; private set; } // 클리어 횟수
+
         public Character(Inventory _inventory, int _level, string _name, CHAD _chad,
             double _attackPower, double _defensePower,
             double _health, int _gold, int _clearCount)
@@ -89,6 +90,7 @@ namespace SpartaTextRPG
         // 골드 감소
         public void DecreaseGold(int decreaseGold)
         {
+            Console.WriteLine(decreaseGold);
             gold -= decreaseGold;
         }
 
@@ -100,9 +102,9 @@ namespace SpartaTextRPG
             Console.WriteLine($"레벨: {level.ToString("00")}");
             Console.WriteLine($"이름: {name}");
             Console.WriteLine($"직업: {GetChadName()}");
-            Console.WriteLine($"공격력: {attackPower.ToString("N1")} (+{inventory.TotalAttackItemStatus()})");
-            Console.WriteLine($"방어력: {defensePower.ToString("N1")} (+{inventory.TotalDefenseItemStatus()})");
-            Console.WriteLine($"체력: {health.ToString("N1")}");
+            Console.WriteLine($"공격력: {attackPower} (+{inventory.TotalAttackItemStatus()})");
+            Console.WriteLine($"방어력: {defensePower} (+{inventory.TotalDefenseItemStatus()})");
+            Console.WriteLine($"체력: {health}");
             Console.WriteLine($"골드: {gold} G\n");
 
             Console.WriteLine("0. 나가기\n");
