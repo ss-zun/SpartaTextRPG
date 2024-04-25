@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SpartaTextRPG
 {
@@ -7,10 +8,9 @@ namespace SpartaTextRPG
     {
         private static int gameSpeed;
         private static string characterName;
-        private static List<Item> items;
-        private static Inventory inventory;
-        private static Character character;
-        private static Shop shop;
+        public static List<Item> items;
+        public static Character character;
+        public static Shop shop;
         // 게임 시작 화면
         public static void StartScreen()
         {
@@ -33,7 +33,9 @@ namespace SpartaTextRPG
             items.Add(new Weapon(false, "낡은 검", 2, "쉽게 볼 수 있는 낡은 검입니다.", false, 600));
             items.Add(new Weapon(false, "청동 도끼", 5, "어디선가 사용됐던거 같은 도끼입니다.", false, 1500));
             items.Add(new Weapon(false, "스파르타의 창", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", false, 2000));
+
             // 나만의 새로운 아이템 추가
+            items.Add(new Armor(false, "오래된 갑옷", 2, "오래되어서 방어력이 낮은 갑옷입니다.", false, 400));
             items.Add(new Weapon(false, "막대사탕 지팡이", 3, "달달한 사탕으로 만든 지팡이입니다.", false, 900));
         }
 
@@ -43,8 +45,7 @@ namespace SpartaTextRPG
             gameSpeed = 100;
             characterName = "삐약";
             items = new List<Item>(); // 아이템 목록
-            inventory = new Inventory();
-            character = new Character(inventory, 1, characterName, CHAD.Warrior, 10, 5, 100, 1500);
+            character = new Character(new Inventory(), 1, characterName, CHAD.Warrior, 10, 5, 100, 1500);
             shop = new Shop(character, items);
 
             InitializeItems(items);
@@ -74,7 +75,7 @@ namespace SpartaTextRPG
                         case ConsoleKey.D2:
                         case ConsoleKey.NumPad2:
                             Console.Clear();
-                            inventory.DisplayInventory();
+                            character.inventory.DisplayInventory();
                             break;
                         case ConsoleKey.D3:
                         case ConsoleKey.NumPad3:

@@ -35,34 +35,35 @@ namespace SpartaTextRPG
 
         // 장착/미장착 변경
         public virtual void ChangeEquipped()
-        {
+        {         
             isEquipped = isEquipped == true ? false : true;
         }
 
         // 아이템 능력치 반환
         public virtual int GetStatus() {  return 0; }
 
-        // 판매완료 상태 변환
-        public virtual void SaleCompleted()
+        // 판매완료 상태 전환
+        public virtual void completeSale()
         {
             isSold = true;
         }
+
+        // 판매가능 상태 전환
+        public virtual void availableSale()
+        {
+            isSold = false;
+        }
     }
 
-    // 아이템 스탯 증가 인터페이스
-    public interface IEquipItem
+    // 아이템 인터페이스
+    public interface IItem
     {
         void EquipItem(Character character);
-    }
-
-    // 아이템 스탯 감소 인터페이스
-    public interface IUnequipItem
-    {
         void UnequipItem(Character character);
     }
 
     // 방어구 클래스
-    public class Armor : Item, IEquipItem, IUnequipItem
+    public class Armor : Item, IItem
     {
         public Armor(bool _equipped, string _name, int _status,
             string _description, bool _isSold, int _price)
@@ -92,7 +93,7 @@ namespace SpartaTextRPG
     }
 
     // 무기 클래스
-    public class Weapon : Item, IEquipItem, IUnequipItem
+    public class Weapon : Item, IItem
     {
         public Weapon(bool _equipped, string _name, int _status,
             string _description, bool _isSold, int _price)

@@ -69,6 +69,12 @@ namespace SpartaTextRPG
             attackPower -= itemStat;
         }
 
+        // 골드 증가
+        public void IncreaseGold(int itemPrice)
+        {
+            gold += itemPrice;
+        }
+
         // 골드 감소
         public void DecreaseGold(int itemPrice)
         {

@@ -10,7 +10,7 @@ namespace SpartaTextRPG
 {
     public class Inventory
     {
-        private List<Item> items; // 아이템 목록
+        public List<Item> items { get; } // 아이템 목록
 
         // 빈 리스트로 초기화
         public Inventory() 
@@ -22,6 +22,12 @@ namespace SpartaTextRPG
         public void AddItem(Item item)
         {
             items.Add(item);
+        }
+
+        // 아이템을 인벤토리에서 제거
+        public void DropItem(Item item)
+        {
+            items.Remove(item);
         }
 
         // 장착중인 공격력 아이템 능력치를 모두 더하여 반환
@@ -48,7 +54,7 @@ namespace SpartaTextRPG
             return totalStats;
         }
 
-        // 인벤토리의 아이템 출력
+        // 인벤토리 아이템 목록 화면
         public void DisplayInventory()
         {
             Console.WriteLine("< 인벤토리 >");
@@ -134,14 +140,35 @@ namespace SpartaTextRPG
                         {
                             Console.Clear();
                             Game.StartScreen();
+                            break;
                         }
                         else
-                        {                           
-                            items[key-1].ChangeEquipped();
-                            Console.Clear();
-                            DisplayInventory();
+                        {
+                            if (key >= 1 && key <= items.Count)
+                            {
+                                if (items[key - 1].isEquipped == false) // 미장착 상태
+                                {
+                                    // 같은 타입의 아이템이 장착중인지 체크
+                                    foreach (Item item in items) // item : 인벤토리 내 아이템들
+                                    {
+                                        if (item.isEquipped && item.GetType() == items[key - 1].GetType())
+                                        {
+                                            item.ChangeEquipped(); // 기존 아이템 해제
+                                            break;
+                                        }
+                                    }
+                                }
+                                // 현재 아이템 장착
+                                items[key - 1].ChangeEquipped();
+                                Console.Clear();
+                                DisplayInventory();
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("잘못된 입력입니다.");
+                            }
                         }
-                        break;
                     }
                     else
                     {
