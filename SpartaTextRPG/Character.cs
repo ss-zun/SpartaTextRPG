@@ -28,13 +28,14 @@ namespace SpartaTextRPG
         public int level { get; private set; }
         public string name { get; private set; }
         public CHAD chad { get; private set; }
-        public int attackPower { get; private set; }
-        public int defensePower { get; private set; }
-        public int health { get; private set; }
+        public double attackPower { get; private set; }
+        public double defensePower { get; private set; }
+        public double health { get; private set; }
         public int gold { get; private set; }
+        public int clearCount { get; private set; }
         public Character(Inventory _inventory, int _level, string _name, CHAD _chad,
-            int _attackPower, int _defensePower,
-            int _health, int _gold)
+            double _attackPower, double _defensePower,
+            double _health, int _gold, int _clearCount)
         {
             if (instance == null)
                 instance = this;
@@ -46,36 +47,37 @@ namespace SpartaTextRPG
             defensePower = _defensePower;
             health = _health;
             gold = _gold;
+            clearCount = _clearCount;
         }
 
         // 방어력 스탯 증가
-        public void IncreaseDefense(int itemStat)
+        public void IncreaseDefense(double increaseDefense)
         {
-            defensePower += itemStat;
+            defensePower += increaseDefense;
         }
 
         // 방어력 스탯 감소
-        public void DecreaseDefense(int itemStat)
+        public void DecreaseDefense(double decreaseDefense)
         {
-            defensePower -= itemStat;
+            defensePower -= decreaseDefense;
         }
 
         // 공격력 스탯 증가
-        public void IncreaseAttack(int itemStat)
+        public void IncreaseAttack(double increaseAttack)
         {
-            attackPower += itemStat;
+            attackPower += increaseAttack;
         }
 
         // 공격력 스탯 감소
-        public void DecreaseAttack(int itemStat)
+        public void DecreaseAttack(double decreaseAttack)
         {
-            attackPower -= itemStat;
+            attackPower -= decreaseAttack;
         }
 
         // 체력 스탯 감소
-        public void DecreaseHealth(int decreasedHealth)
+        public void DecreaseHealth(double decreaseHealth)
         {
-            health -= decreasedHealth;
+            health -= decreaseHealth;
         }
 
         // 골드 증가
@@ -206,6 +208,21 @@ namespace SpartaTextRPG
             {
                 Console.WriteLine("골드가 부족합니다.");
             }
+        }
+
+        // 클리어 횟수 증가
+        public void IncreaseClearCount()
+        {
+            clearCount += 1;
+        }
+
+        // 레벨업
+        public void LevelUp()
+        {
+            level += 1;
+            clearCount = 0;
+            attackPower += 0.5;
+            defensePower += 1.0;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace SpartaTextRPG
             gameSpeed = 100;
             characterName = "삐약";
             items = new List<Item>(); // 아이템 목록
-            character = new Character(new Inventory(), 1, characterName, CHAD.Warrior, 10, 5, 100, 1500);
+            character = new Character(new Inventory(), 1, characterName, CHAD.Warrior, 10.0, 5.0, 100.0, 1500, 0);
             shop = new Shop(items);
             dungeon = new Dungeon();
 

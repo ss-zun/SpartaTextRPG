@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace SpartaTextRPG
 {
     public class Dungeon
     {
-        protected int recommendedDefense; // 권장 방어력
+        protected double recommendedDefense; // 권장 방어력
         protected int goldReward; // 기본 골드 보상
 
         // 던전 입구
@@ -96,7 +97,7 @@ namespace SpartaTextRPG
         {
             // 보상 없고 체력 감소 절반
             Console.WriteLine("< 던전 클리어 실패 >");
-            int oldHealth = Character.instance.health;
+            double oldHealth = Character.instance.health;
             Character.instance.DecreaseHealth(Character.instance.health / 2);
             Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}\n");
             Console.WriteLine("Press Enter...");
@@ -114,9 +115,11 @@ namespace SpartaTextRPG
 
             Console.WriteLine("[탐험 결과]");
             // 체력 감소
-            int oldHealth = Character.instance.health; // 기존의 내 방어력
-            int defenseDifference = Character.instance.defensePower - recommendedDefense; // 내 방어력 - 권장 방어력
-            int decreasedHealth = new Random().Next(20 + defenseDifference, 36 + defenseDifference); // 20(-+@)~35(-+@)
+            double oldHealth = Character.instance.health; // 기존의 내 방어력
+            double defenseDifference = Character.instance.defensePower - recommendedDefense; // 내 방어력 - 권장 방어력
+            double min = 20.0 + defenseDifference;
+            double max = 36.0 + defenseDifference;
+            double decreasedHealth = min + (max - min) * new Random().NextDouble(); // 20(-+@)~35(-+@)
             Character.instance.DecreaseHealth(decreasedHealth); // 캐릭터 체력 감소
             Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}");
 
@@ -126,6 +129,15 @@ namespace SpartaTextRPG
             int totalReward = goldReward + (int)(Character.instance.attackPower * randReward); // 기본 골드 보상 + 공격력 대비 추가 보상
             Character.instance.IncreaseGold(totalReward); // 캐릭터 골드 증가
             Console.WriteLine($"골드 {oldGold} G -> {Character.instance.gold} G\n");
+
+            // 클리어 횟수 증가
+            Character.instance.IncreaseClearCount();
+            // 레벨업 조건 달성시 레벨업
+            if (Character.instance.level == Character.instance.clearCount)
+            {
+                Character.instance.LevelUp();
+            }
+            
 
             Console.WriteLine("0. 나가기\n");
 
@@ -160,7 +172,7 @@ namespace SpartaTextRPG
     {
         public EasyDungeon()
         {
-            recommendedDefense = 5;
+            recommendedDefense = 5.0;
             goldReward = 1000;
         }
     }
@@ -170,7 +182,7 @@ namespace SpartaTextRPG
     {
         public NormalDungeon()
         {
-            recommendedDefense = 11;
+            recommendedDefense = 11.0;
             goldReward = 1700;
         }
     }
@@ -180,7 +192,7 @@ namespace SpartaTextRPG
     {
         public HardDungeon()
         {
-            recommendedDefense = 17;
+            recommendedDefense = 17.0;
             goldReward = 2500;
         }
     }
