@@ -122,7 +122,7 @@ namespace SpartaTextRPG
             double max = 36.0 + defenseDifference;
             double decreasedHealth = min + (max - min) * new Random().NextDouble(); // 20(-+@)~35(-+@)
             Character.instance.DecreaseHealth(decreasedHealth); // 캐릭터 체력 감소
-            Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}");
+            Console.WriteLine($"체력 {oldHealth.ToString("N1")} -> {Character.instance.health.ToString("N1")}");
 
             // 골드 보상
             int oldGold = Character.instance.gold; // 기존의 내 골드

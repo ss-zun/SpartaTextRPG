@@ -100,9 +100,9 @@ namespace SpartaTextRPG
             Console.WriteLine($"레벨: {level.ToString("00")}");
             Console.WriteLine($"이름: {name}");
             Console.WriteLine($"직업: {GetChadName()}");
-            Console.WriteLine($"공격력: {attackPower} (+{inventory.TotalAttackItemStatus()})");
-            Console.WriteLine($"방어력: {defensePower} (+{inventory.TotalDefenseItemStatus()})");
-            Console.WriteLine($"체력: {health}");
+            Console.WriteLine($"공격력: {attackPower.ToString("N1")} (+{inventory.TotalAttackItemStatus()})");
+            Console.WriteLine($"방어력: {defensePower.ToString("N1")} (+{inventory.TotalDefenseItemStatus()})");
+            Console.WriteLine($"체력: {health.ToString("N1")}");
             Console.WriteLine($"골드: {gold} G\n");
 
             Console.WriteLine("0. 나가기\n");
