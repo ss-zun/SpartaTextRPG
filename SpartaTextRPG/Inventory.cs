@@ -10,12 +10,11 @@ namespace SpartaTextRPG
 {
     public class Inventory
     {
-        public List<Item> items { get; } // 아이템 목록
+        public List<Item> items { get; private set; } // 아이템 목록
 
-        // 빈 리스트로 초기화
-        public Inventory() 
+        public Inventory(List<Item> items) 
         {
-            items = new List<Item>(); 
+            this.items = items;
         }
 
         // 아이템을 인벤토리에 추가
@@ -36,7 +35,7 @@ namespace SpartaTextRPG
             double totalItemValue = 0;
             foreach (Item item in items)
             {
-                if (item.isEquipped == true && item is Weapon)
+                if (item.isEquipped == true && item.type == ITEM_TYPE.Weapon)
                     totalItemValue += item.GetItemValue();
             }
             return totalItemValue;
@@ -48,7 +47,7 @@ namespace SpartaTextRPG
             double totalItemValue = 0;
             foreach (Item item in items)
             {
-                if (item.isEquipped == true && item is Armor)
+                if (item.isEquipped == true && item.type == ITEM_TYPE.Armor)
                     totalItemValue += item.GetItemValue();
             }
             return totalItemValue;

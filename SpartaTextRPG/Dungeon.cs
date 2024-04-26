@@ -96,7 +96,7 @@ namespace SpartaTextRPG
             Character.instance.DecreaseHealth(decreaseHealth); // 캐릭터 체력 감소
             Console.WriteLine($"체력 {oldHealth} -> {Character.instance.health}\n");
 
-            Console.WriteLine("Press Enter...");
+            Console.WriteLine("Press AnyKey");
             Console.ReadLine(); // 아무키 입력 후 화면 전환
             Console.Clear();
             DisplayDungeonEntrance();

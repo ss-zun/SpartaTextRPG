@@ -9,9 +9,9 @@ namespace SpartaTextRPG
     public class Shop
     {
         private List<Item> items;
-        public Shop(List<Item> _items)
+        public Shop(List<Item> items)
         {
-            items = _items;
+            this.items = items;
         }
 
         // 상점 화면
@@ -134,7 +134,7 @@ namespace SpartaTextRPG
                                         Character.instance.DecreaseGold(items[key - 1].price); // 골드 감소
                                         Character.instance.inventory.AddItem(items[key - 1]); // 인벤토리에 아이템 추가
                                         items[key - 1].completeSale(); // 판매완료 상태 전환
-                                        Console.WriteLine("Press Enter...");
+                                        Console.WriteLine("Press Anykey");
                                         Console.ReadLine(); // 아무키 입력 후 화면 전환
                                         Console.Clear();
                                         DisplayShopItem();

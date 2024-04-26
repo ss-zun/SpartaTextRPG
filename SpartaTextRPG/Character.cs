@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -22,7 +23,8 @@ namespace SpartaTextRPG
     public class Character
     {
         public static Character instance; // 싱글톤
-        public Inventory inventory { get; } // 캐릭터의 인벤토리
+
+        public Inventory inventory { get; private set; } // 캐릭터의 인벤토리
 
         // 캐릭터 속성
         public int level { get; private set; }
@@ -34,21 +36,22 @@ namespace SpartaTextRPG
         public int gold { get; private set; }
         public int clearCount { get; private set; } // 클리어 횟수
 
-        public Character(Inventory _inventory, int _level, string _name, CHAD _chad,
-            double _attackPower, double _defensePower,
-            double _health, int _gold, int _clearCount)
+        public Character(Inventory inventory, int level, string name, CHAD chad, 
+            double attackPower, double defensePower, double health, 
+            int gold, int clearCount)
         {
             if (instance == null)
                 instance = this;
-            inventory = _inventory; // 인벤토리
-            level = _level;
-            name = _name;
-            chad = _chad;
-            attackPower = _attackPower;
-            defensePower = _defensePower;
-            health = _health;
-            gold = _gold;
-            clearCount = _clearCount;
+           
+            this.inventory = inventory;
+            this.level = level;
+            this.name = name;
+            this.chad = chad;
+            this.attackPower = attackPower;
+            this.defensePower = defensePower;
+            this.health = health;
+            this.gold = gold;
+            this.clearCount = clearCount;
         }
 
         // 방어력 스탯 증가
@@ -90,7 +93,6 @@ namespace SpartaTextRPG
         // 골드 감소
         public void DecreaseGold(int decreaseGold)
         {
-            Console.WriteLine(decreaseGold);
             gold -= decreaseGold;
         }
 
@@ -184,7 +186,7 @@ namespace SpartaTextRPG
                         case ConsoleKey.D1:
                         case ConsoleKey.NumPad1:
                             CanRest();
-                            Console.WriteLine("Press Enter...");
+                            Console.WriteLine("Press AnyKey");
                             Console.ReadLine(); // 아무키 입력 후 화면 전환
                             Console.Clear();
                             Game.StartScreen();

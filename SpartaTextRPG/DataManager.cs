@@ -7,28 +7,45 @@ using System.Threading.Tasks;
 
 namespace SpartaTextRPG
 {
-    internal class DataManager
+    public  class DataManager
     {
-        private static string dataFilePath = "game_data.json";
+        public static DataManager instance; // 싱글톤
+
+
+        // 싱글톤 인스턴스를 가져오기
+        public static DataManager GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new DataManager();
+            }
+            return instance;
+        }
 
         // 데이터 저장
-        public static void SaveData<T>(T data)
+        public void SaveData<T>(T data, string filePath)
         {
-            var jsonData = JsonSerializer.Serialize(data);
-            File.WriteAllText(dataFilePath, jsonData);
+            var options = new JsonSerializerOptions
+            {
+                // 한글을 유니코드로 변환하지 않고 그대로 유지
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true // 들여쓰기 설정
+            };
+            var jsonData = JsonSerializer.Serialize(data, options);
+            File.WriteAllText(filePath, jsonData, System.Text.Encoding.UTF8); // UTF-8로 저장
         }
 
         // 데이터 불러오기
-        public static T LoadData<T>()
+        public T LoadData<T>(string filePath)
         {
-            if (File.Exists(dataFilePath))
+            if (File.Exists(filePath))
             {
-                var jsonData = File.ReadAllText(dataFilePath);
+                var jsonData = File.ReadAllText(filePath, System.Text.Encoding.UTF8);
                 return JsonSerializer.Deserialize<T>(jsonData);
             }
             else
             {
-                throw new FileNotFoundException("파일을 찾을 수 없습니다.", dataFilePath);
+                throw new FileNotFoundException("파일을 찾을 수 없습니다.", filePath);
             }
         }
     }
