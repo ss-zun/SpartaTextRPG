@@ -150,7 +150,7 @@ namespace SpartaTextRPG
                                     // 같은 타입의 아이템이 장착중인지 체크
                                     foreach (Item item in items) // item : 인벤토리 내 아이템들
                                     {
-                                        if (item.isEquipped && item.GetType() == items[key - 1].GetType())
+                                        if (item.isEquipped && item.type == items[key - 1].type)
                                         {
                                             item.ChangeEquipped(); // 기존 아이템 해제
                                             break;
