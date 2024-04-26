@@ -90,14 +90,11 @@ namespace SpartaTextRPG
             character.DecreaseDefense(value);
         }
 
-        // 방어구 아이템 능력치 반환
-        //public override double GetItemValue() { return itemValue; }
-
         // 방어구 아이템 출력
-        //public override string DisplayItem()
-        //{
-        //    return $"{name}{new string('　', 10-name.Length)} | 방어력 +{itemValue} | {description}";
-        //}
+        public override string DisplayItem()
+        {
+            return $"{name}{new string('　', 10 - name.Length)} | 방어력 +{value} | {description}";
+        }
     }
 
     // 무기 클래스
@@ -121,15 +118,11 @@ namespace SpartaTextRPG
             character.DecreaseAttack(value);
         }
 
-
-        // 무기 아이템 능력치 반환
-        //public override double GetItemValue() { return itemValue; }
-
         // 무기 아이템 출력
-        //public override string DisplayItem()
-        //{
-        //    return $"{name}{new string('　', 10-name.Length)} | 공격력 +{itemValue} | {description}";
-        //}
+        public override string DisplayItem()
+        {
+            return $"{name}{new string('　', 10 - name.Length)} | 공격력 +{value} | {description}";
+        }
     }
 }
 
